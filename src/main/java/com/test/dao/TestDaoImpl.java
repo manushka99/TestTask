@@ -1,13 +1,16 @@
-package dao;
+package com.test.dao;
 
+import com.test.model.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tools.ConfigLoader;
+import org.springframework.stereotype.Repository;
+import com.test.config.ConfigLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class TestDaoImpl implements TestDao {
     ConfigLoader configLoader = new ConfigLoader();
 

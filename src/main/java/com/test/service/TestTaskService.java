@@ -1,6 +1,4 @@
-package service;
-
-import java.util.List;
+package com.test.service;
 
 public interface TestTaskService {
     String findAll();

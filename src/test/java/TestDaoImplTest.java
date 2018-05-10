@@ -1,4 +1,4 @@
-import dao.TestDaoImpl;
+import com.test.dao.TestDaoImpl;
 import org.junit.Test;
 
 

@@ -1,4 +1,6 @@
-package dao;
+package com.test.dao;
+
+import com.test.model.Test;
 
 import java.sql.SQLException;
 import java.util.List;

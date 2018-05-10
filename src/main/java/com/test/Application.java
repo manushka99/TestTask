@@ -1,4 +1,4 @@
-package application;
+package com.test;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan("com.test.*")
 public class Application {
 
     public static void main(String[] args) {

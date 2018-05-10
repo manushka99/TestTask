@@ -1,13 +1,18 @@
-package service;
+package com.test.service;
 
 import java.util.List;
 
-import dao.Test;
-import dao.TestDao;
-import dao.TestDaoImpl;
+import com.test.model.Test;
+import com.test.dao.TestDao;
+import com.test.dao.TestDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TestTaskServiceImpl implements TestTaskService {
+
+    @Autowired
+    TestDao testDao;
 
     @Override
     public String findAll() {

@@ -1,4 +1,4 @@
-package tools;
+package com.test.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
