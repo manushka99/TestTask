@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface TestDao {
 
-    Test findById(int id) throws SQLException;
+    Test findById(long id) throws SQLException;
 
     List<Test> findAll();
 
-    void setData(int id, String name) throws SQLException;
+    void setData(long id, String name) throws SQLException;
 
 }

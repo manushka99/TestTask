@@ -1,3 +1,4 @@
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import com.test.service.TestTaskServiceImpl;
 
@@ -6,7 +7,7 @@ import static org.junit.Assert.assertNull;
 
 public class TestTaskService {
 
-
+    final static Logger logger = Logger.getLogger(TestTaskService.class);
     @Test
     public void findAllTest() {
         TestTaskServiceImpl testTaskService = new TestTaskServiceImpl();
@@ -16,9 +17,11 @@ public class TestTaskService {
 
     @Test
     public void findById() {
-        TestTaskServiceImpl testTaskService = new TestTaskServiceImpl();
-            String result = testTaskService.findById(1);
-        assertEquals(result, "1 test-1");
+       try {
+           throw new Exception();
+       } catch (Exception e) {
+           logger.info(e);
+       }
     }
 
 }

@@ -1,10 +1,9 @@
 package com.test.dao;
 
 import com.test.model.Test;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import com.test.config.ConfigLoader;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,25 +11,26 @@ import java.util.List;
 
 @Repository
 public class TestDaoImpl implements TestDao {
-    ConfigLoader configLoader = new ConfigLoader();
 
+    final static Logger logger = Logger.getLogger(TestDaoImpl.class);
     private static Connection connection;
     private static Statement statement;
 
-    private static final Logger logger = LogManager.getLogger();
+    private String url ="jdbc:mysql://localhost:3306/DataBaseTest";
+    private String userLogin = "user";
+    private String userPasswd = "user";
 
     @Override
-    public Test findById(int id) throws SQLException {
-        String QUERY_FIND_ID = "SELECT * FROM test WHERE id =" + id;
+    public Test findById(long id) {
+        String QUERY_FIND_ID = "SELECT * FROM test_task WHERE id =" + id;
         connection();
         Test test = new Test();
         try {
             ResultSet resultSet = statement.executeQuery(QUERY_FIND_ID);
 
             resultSet.next();
-            test.setId(resultSet.getString("id"));
+            test.setId(resultSet.getLong("id"));
             test.setName(resultSet.getString("name"));
-
         } catch (Exception e) {
             logger.debug(e);
         }
@@ -38,12 +38,12 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public void setData(int id, String name) throws SQLException {
-        String sql = "INSERT INTO test(id, name) value (?, ?);";
+    public void setData(long id, String name) {
+        String QUERY_SET_DATA = "INSERT INTO test_task(id, name) value (?, ?);";
         connection();
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(QUERY_SET_DATA)) {
 
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             preparedStatement.setString(2, name);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -52,8 +52,8 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public List<Test> findAll()   {
-        String QUERY_FIND_ALL = "SELECT * FROM test";
+    public List<Test> findAll() {
+        String QUERY_FIND_ALL = "SELECT * FROM test_task";
         List<Test> listTest = new ArrayList();
         connection();
 
@@ -62,7 +62,7 @@ public class TestDaoImpl implements TestDao {
 
             while (resultSet.next()) {
                 Test test = new Test();
-                test.setId(resultSet.getString("id"));
+                test.setId(resultSet.getLong("id"));
                 test.setName(resultSet.getString("name"));
                 listTest.add(test);
             }
@@ -75,7 +75,7 @@ public class TestDaoImpl implements TestDao {
 
     private void connection() {
         try {
-            connection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/DataBaseTest", "user", "user");
+            connection = DriverManager.getConnection(url, userLogin, userPasswd);
             statement = connection.createStatement();
         } catch (Exception e) {
             logger.debug(e);

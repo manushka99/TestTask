@@ -1,33 +1,37 @@
+import com.test.dao.TestDao;
 import com.test.dao.TestDaoImpl;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
+
 public class TestDaoImplTest {
 
+    TestDaoImpl testDao = new TestDaoImpl();
+
+    @Ignore
     @Test
     public void findByIdTest() throws SQLException {
-        TestDaoImpl testDaoImpl = new TestDaoImpl();
-            testDaoImpl.findById(11);
-            String id = testDaoImpl.findById(1).getId();
-            String name = testDaoImpl.findById(1).getName();
-            assertEquals("1", id);
+//            String id = testDao.findById(1).getId();
+            String name = testDao.findById(1).getName();
+//            assertEquals("1", id);
             assertEquals("test", name);
     }
 
     @Test
     public void setDataTest() throws SQLException {
-        TestDaoImpl testDaoImpl = new TestDaoImpl();
-        testDaoImpl.setData(1,"unitTest");
-
+        testDao.setData(-1, "UnitTestName");
+        assertEquals("UnitTestName", testDao.findById(-1).getName());
     }
 
     @Test
     public void findAllTest() {
-        TestDaoImpl testDaoImpl = new TestDaoImpl();
-            assertNull(testDaoImpl.findAll());
+            assertNotNull(testDao.findAll());
     }
 }
