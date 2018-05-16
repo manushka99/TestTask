@@ -15,13 +15,10 @@ public class TestDaoImplTest {
 
     TestDaoImpl testDao = new TestDaoImpl();
 
-    @Ignore
     @Test
     public void findByIdTest() throws SQLException {
-//            String id = testDao.findById(1).getId();
-            String name = testDao.findById(1).getName();
-//            assertEquals("1", id);
-            assertEquals("test", name);
+        testDao.setData(-1, "UnitTestName");
+            assertEquals("UnitTestName", testDao.findById(-1L).getName());
     }
 
     @Test
