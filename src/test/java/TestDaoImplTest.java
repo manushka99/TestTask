@@ -1,19 +1,19 @@
+import com.test.Application;
 import com.test.dao.TestDao;
-import com.test.dao.TestDaoImpl;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import org.springframework.boot.test.SpringApplicationConfiguration;
 
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
 
+@SpringApplicationConfiguration(Application.class)
 public class TestDaoImplTest {
 
-    TestDaoImpl testDao = new TestDaoImpl();
+    @Autowired
+    private TestDao testDao;
 
     @Test
     public void findByIdTest() throws SQLException {

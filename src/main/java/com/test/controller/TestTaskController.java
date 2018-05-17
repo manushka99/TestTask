@@ -28,5 +28,10 @@ public class TestTaskController {
         return testTaskService.setData(id, name);
 
     }
+    @RequestMapping(value = "/setData/{id}/{name}", method = POST)
+    public String setDataq(@PathVariable long id, @PathVariable String name) {
+        return testTaskService.setData(id, name);
+
+    }
 }
 

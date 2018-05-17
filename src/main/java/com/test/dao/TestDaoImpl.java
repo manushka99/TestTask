@@ -3,6 +3,7 @@ package com.test.dao;
 import com.test.model.Test;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.*;
@@ -51,6 +52,7 @@ public class TestDaoImpl implements TestDao {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Test> findAll() {
         String QUERY_FIND_ALL = "SELECT * FROM test_task";
