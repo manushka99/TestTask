@@ -36,17 +36,18 @@ public class TestTaskServiceImpl implements TestTaskService {
 
     @Override
     public String setData(long id, String name) {
-        try {
-            if (!checkExistingId(id)) {
-                testDao.setData(id, name);
-                return "yes";
-            } else {
-                return "id exist";
-            }
-        } catch (Exception e) {
-            logger.info(e);
-            return null;
-        }
+//        try {
+//            if (!checkExistingId(id)) {
+//                testDao.setData(id, name);
+//                return "yes";
+//            } else {
+//                return "id exist";
+//            }
+//        } catch (Exception e) {
+//            logger.info(e);
+//            return null;
+//        }
+        return "ReturnSpringBoot";
     }
 
     @Override
