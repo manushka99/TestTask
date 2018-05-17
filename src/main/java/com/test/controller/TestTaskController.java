@@ -13,6 +13,8 @@ public class TestTaskController {
     @Autowired
     TestTaskService testTaskService;
 
+    String test;
+
     @RequestMapping(value = "/findAll", method = GET)
     public String findAll() {
         return testTaskService.findAll();
