@@ -1,14 +1,13 @@
 package com.test.service;
 
-import com.test.dto.SetDataDto;
-import com.test.model.Test;
+import com.test.dto.DataDto;
 
 import java.util.List;
 
 public interface TestTaskService {
-    List<Test> findAll();
+    List<DataDto> findAll();
 
-    Object setData(SetDataDto setDataDto);
+    Object setData(DataDto dataDto);
 
     Object findById(long id);
 }

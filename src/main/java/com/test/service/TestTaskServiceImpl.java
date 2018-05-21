@@ -1,16 +1,12 @@
 package com.test.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.test.dto.SetDataDto;
-import com.test.model.Test;
 import com.test.dao.TestDao;
-import com.test.dao.TestDaoImpl;
+import com.test.dto.DataDto;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TestTaskServiceImpl implements TestTaskService {
@@ -20,7 +16,7 @@ public class TestTaskServiceImpl implements TestTaskService {
     TestDao testDao;
 
     @Override
-    public List<Test> findAll() {
+    public List<DataDto> findAll() {
         try {
 
             return testDao.findAll();
@@ -31,10 +27,10 @@ public class TestTaskServiceImpl implements TestTaskService {
     }
 
     @Override
-    public Object setData(SetDataDto setDataDto) {
+    public Object setData(DataDto dataDto) {
         try {
 
-            return testDao.setData(setDataDto);
+            return testDao.setData(dataDto);
         } catch (Exception e) {
             logger.info(e);
             return null;

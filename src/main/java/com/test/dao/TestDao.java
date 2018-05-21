@@ -1,17 +1,16 @@
 package com.test.dao;
 
-import com.test.dto.SetDataDto;
-import com.test.model.Test;
+import com.test.dto.DataDto;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface TestDao {
 
-    Test findById(long id) throws SQLException;
+    DataDto findById(long id) throws SQLException;
 
-    List<Test> findAll();
+    List<DataDto> findAll();
 
-    boolean setData(SetDataDto setDataDto);
+    boolean setData(DataDto dataDto);
 
 }

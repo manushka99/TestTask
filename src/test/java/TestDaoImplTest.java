@@ -1,14 +1,13 @@
 import com.test.Application;
-import com.test.dao.TestDao;
 import com.test.dao.TestDaoImpl;
-import com.test.dto.SetDataDto;
+import com.test.dto.DataDto;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 @SpringApplicationConfiguration(Application.class)
@@ -24,11 +23,11 @@ public class TestDaoImplTest {
 
     @Test
     public void setDataTest() {
-        SetDataDto setDataDto = new SetDataDto().builder()
+        DataDto dataDto = new DataDto().builder()
                 .id(-3)
                 .name("TestDTO")
                 .build();
-        testDao.setData(setDataDto);
+        testDao.setData(dataDto);
 
         assertEquals("TestDTO", testDao.findById(-3).getName());
     }

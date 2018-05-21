@@ -1,12 +1,10 @@
 package com.test.dao;
 
-import com.test.dto.SetDataDto;
+import com.test.dto.DataDto;
 import com.test.model.Test;
 import com.test.tools.ConfigLoader;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class TestDaoImpl implements TestDao {
     private final String QUERY_FIND_ALL = "SELECT * FROM test_task";
 
     @Override
-    public Test findById(long id) {
+    public DataDto findById(long id) {
         connection();
         Test test = new Test();
         try {
@@ -41,16 +39,20 @@ public class TestDaoImpl implements TestDao {
         } catch (Exception e) {
             logger.debug(e);
         }
-        return test;
+
+        return new DataDto().builder()
+                .id(test.getId())
+                .name(test.getName())
+                .build();
     }
 
     @Override
-    public boolean setData(SetDataDto setDataDto) {
+    public boolean setData(DataDto dataDto) {
         connection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(QUERY_SET_DATA)) {
 
-            preparedStatement.setLong(1, setDataDto.getId());
-            preparedStatement.setString(2, setDataDto.getName());
+            preparedStatement.setLong(1, dataDto.getId());
+            preparedStatement.setString(2, dataDto.getName());
             preparedStatement.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -60,8 +62,8 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public List<Test> findAll() {
-        List<Test> listTest = new ArrayList();
+    public List<DataDto> findAll() {
+        List<DataDto> listTest = new ArrayList();
         connection();
 
         try {
@@ -71,7 +73,10 @@ public class TestDaoImpl implements TestDao {
                 Test test = new Test();
                 test.setId(resultSet.getLong("id"));
                 test.setName(resultSet.getString("name"));
-                listTest.add(test);
+                listTest.add(new DataDto().builder()
+                              .id(test.getId())
+                              .name(test.getName())
+                              .build());
             }
 
         } catch (Exception e) {

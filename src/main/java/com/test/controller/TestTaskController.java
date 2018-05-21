@@ -1,9 +1,12 @@
 package com.test.controller;
 
-import com.test.dto.SetDataDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.test.dto.DataDto;
 import com.test.service.TestTaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -25,8 +28,8 @@ public class TestTaskController {
     }
 
     @RequestMapping(value = "/setData", method = POST)
-    public Object setData(@RequestBody SetDataDto setDataDto) {
-        return testTaskService.setData(setDataDto);
+    public Object setData(@RequestBody DataDto dataDto) {
+        return testTaskService.setData(dataDto);
 
     }
 }
