@@ -1,5 +1,6 @@
 package com.test.dao;
 
+import com.test.dto.SetDataDto;
 import com.test.model.Test;
 
 import java.sql.SQLException;
@@ -11,6 +12,6 @@ public interface TestDao {
 
     List<Test> findAll();
 
-    void setData(long id, String name) throws SQLException;
+    boolean setData(SetDataDto setDataDto);
 
 }

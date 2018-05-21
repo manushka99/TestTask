@@ -1,8 +1,10 @@
 package com.test.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.test.dto.SetDataDto;
 import com.test.model.Test;
 import com.test.dao.TestDao;
 import com.test.dao.TestDaoImpl;
@@ -18,16 +20,10 @@ public class TestTaskServiceImpl implements TestTaskService {
     TestDao testDao;
 
     @Override
-    public String findAll() {
+    public List<Test> findAll() {
         try {
-            TestDaoImpl testDao = new TestDaoImpl();
 
-            List<Test> listTest = testDao.findAll();
-            String listResult = "";
-            for (int i = 0; i < listTest.size(); i++) {
-                listResult = listResult + " " + listTest.get(i).getName();
-            }
-            return listResult;
+            return testDao.findAll();
         } catch (Exception e) {
             logger.info(e);
             return null;
@@ -35,40 +31,25 @@ public class TestTaskServiceImpl implements TestTaskService {
     }
 
     @Override
-    public String setData(long id, String name) {
-//        try {
-//            if (!checkExistingId(id)) {
-//                testDao.setData(id, name);
-//                return "yes";
-//            } else {
-//                return "id exist";
-//            }
-//        } catch (Exception e) {
-//            logger.info(e);
-//            return null;
-//        }
-        return "ReturnSpringBoot";
-    }
-
-    @Override
-    public String findById(long id) {
+    public Object setData(SetDataDto setDataDto) {
         try {
-            Test test = testDao.findById(id);
-            String result =  test.getId() + " " + test.getName();
-            return result;
 
-        } catch (Exception e)   {
+            return testDao.setData(setDataDto);
+        } catch (Exception e) {
             logger.info(e);
             return null;
         }
     }
 
-    private boolean checkExistingId(long id) throws SQLException {
-        Test test = testDao.findById(id);
-        if(id == test.getId()) {
-            return true;
+    @Override
+    public Object findById(long id) {
+        try {
+            return testDao.findById(id);
+
+        } catch (Exception e)   {
+            logger.info(e);
+            return null;
         }
-        return false;
     }
 }
 

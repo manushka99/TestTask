@@ -1,5 +1,7 @@
 import com.test.Application;
 import com.test.dao.TestDao;
+import com.test.dao.TestDaoImpl;
+import com.test.dto.SetDataDto;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -12,19 +14,23 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(Application.class)
 public class TestDaoImplTest {
 
-    @Autowired
-    private TestDao testDao;
+   TestDaoImpl testDao = new TestDaoImpl();
+
 
     @Test
     public void findByIdTest() throws SQLException {
-        testDao.setData(-1, "UnitTestName");
-            assertEquals("UnitTestName", testDao.findById(-1L).getName());
+        assertEquals("UnitTestName", testDao.findById(-1L).getName());
     }
 
     @Test
-    public void setDataTest() throws SQLException {
-        testDao.setData(-1, "UnitTestName");
-        assertEquals("UnitTestName", testDao.findById(-1).getName());
+    public void setDataTest() {
+        SetDataDto setDataDto = new SetDataDto().builder()
+                .id(-3)
+                .name("TestDTO")
+                .build();
+        testDao.setData(setDataDto);
+
+        assertEquals("TestDTO", testDao.findById(-3).getName());
     }
 
     @Test
