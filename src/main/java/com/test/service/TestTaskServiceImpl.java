@@ -2,18 +2,22 @@ package com.test.service;
 
 import com.test.dao.TestDao;
 import com.test.dto.DataDto;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class TestTaskServiceImpl implements TestTaskService {
-    final static Logger logger = Logger.getLogger(TestTaskServiceImpl.class);
+
+    private final TestDao testDao;
 
     @Autowired
-    TestDao testDao;
+    public TestTaskServiceImpl(TestDao testDao) {
+        this.testDao = testDao;
+    }
 
     @Override
     public List<DataDto> findAll() {
@@ -21,7 +25,7 @@ public class TestTaskServiceImpl implements TestTaskService {
 
             return testDao.findAll();
         } catch (Exception e) {
-            logger.info(e);
+            log.debug("findAll", e);
             return null;
         }
     }
@@ -29,10 +33,9 @@ public class TestTaskServiceImpl implements TestTaskService {
     @Override
     public Object setData(DataDto dataDto) {
         try {
-
             return testDao.setData(dataDto);
         } catch (Exception e) {
-            logger.info(e);
+            log.debug("findAll", e);
             return null;
         }
     }
@@ -43,7 +46,7 @@ public class TestTaskServiceImpl implements TestTaskService {
             return testDao.findById(id);
 
         } catch (Exception e)   {
-            logger.info(e);
+            log.debug("findById", e);
             return null;
         }
     }

@@ -2,29 +2,38 @@ package com.test.dao;
 
 import com.test.dto.DataDto;
 import com.test.model.Test;
-import com.test.tools.ConfigLoader;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
+@ComponentScan(value = "com.test.*")
+@PropertySource("classpath:values.properties")
 @Repository
 public class TestDaoImpl implements TestDao {
-    ConfigLoader configLoader = new ConfigLoader();
 
-    final static Logger logger = Logger.getLogger(TestDaoImpl.class);
     private static Connection connection;
     private static Statement statement;
 
-    private String url = configLoader.getUrl();
-    private String userLogin = configLoader.getUserName();
-    private String userPasswd = configLoader.getUserPasswd();
+    @Value("${value.url}")
+    private String url;
+
+    @Value("${value.user.name}")
+    private String userLogin;
+
+    @Value("${value.user.password}")
+    private String userPasswd;
 
     private final String QUERY_FIND_ID = "SELECT * FROM test_task WHERE id =";
-    private final String QUERY_SET_DATA = "INSERT INTO test_task(id, name) value (?, ?);";
+    private final String QUERY_SET_DATA = "INSERT INTO test_task(id, name) VALUE (?, ?);";
     private final String QUERY_FIND_ALL = "SELECT * FROM test_task";
+
 
     @Override
     public DataDto findById(long id) {
@@ -32,12 +41,11 @@ public class TestDaoImpl implements TestDao {
         Test test = new Test();
         try {
             ResultSet resultSet = statement.executeQuery(QUERY_FIND_ID + id);
-
             resultSet.next();
             test.setId(resultSet.getLong("id"));
             test.setName(resultSet.getString("name"));
         } catch (Exception e) {
-            logger.debug(e);
+            log.debug("findById", e);
         }
 
         return new DataDto().builder()
@@ -56,7 +64,7 @@ public class TestDaoImpl implements TestDao {
             preparedStatement.executeUpdate();
             return true;
         } catch (Exception e) {
-            logger.debug(e);
+            log.debug("setData", e);
             return false;
         }
     }
@@ -80,7 +88,7 @@ public class TestDaoImpl implements TestDao {
             }
 
         } catch (Exception e) {
-            logger.debug(e);
+            log.debug("findAll", e);
         }
         return listTest;
     }
@@ -90,7 +98,7 @@ public class TestDaoImpl implements TestDao {
             connection = DriverManager.getConnection(url, userLogin, userPasswd);
             statement = connection.createStatement();
         } catch (Exception e) {
-            logger.debug(e);
+            log.debug("connection", e);
         }
     }
 }
